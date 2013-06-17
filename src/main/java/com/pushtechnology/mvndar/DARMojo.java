@@ -37,7 +37,7 @@ import org.codehaus.plexus.archiver.Archiver;
 import org.codehaus.plexus.archiver.jar.JarArchiver;
 
 /**
- * Goal which creates a Diffusion Archive (DAR) file.
+ * Goal that creates a Diffusion™ Archive (DAR) file.
  *
  * @author Philip Aston
  */
@@ -65,7 +65,7 @@ public class DARMojo extends AbstractMojo {
      * @see #diffusionIncludes
      * @see #diffusionExcludes
      */
-    @Parameter(defaultValue = "${basedir}/src/main/diffusion")
+    @Parameter(defaultValue = "${project.basedir}/src/main/diffusion")
     private File diffusionResourceDirectory;
 
     /**

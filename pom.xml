@@ -7,7 +7,7 @@
 	<version>0.1-SNAPSHOT</version>
 	<name>${project.artifactId}</name>
 	<url>https://github.com/pushtechnology/mvndar</url>
-	<description>Maven plugin for creating Diffusion DAR files.</description>
+	<description>A Maven plugin for creating Diffusion DAR files.</description>
 
 	<prerequisites>
 		<maven>3.0</maven>
@@ -31,14 +31,31 @@
 
 	<scm>
 		<url>http://sourceforge.net/p/grinder/code/ci/master/tree/</url>
-		<connection>https://github.com/pushtechnology/mvndar</connection>
+		<connection>scm:git:https://github.com/pushtechnology/mvndar</connection>
 	</scm>
 
 	<properties>
 		<mavenArchiverVersion>2.5</mavenArchiverVersion>
 		<mavenVersion>2.0.6</mavenVersion>
 		<mavenPluginVersion>3.1</mavenPluginVersion>
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!--
+		 To publish the site documentation:
+
+		 	mvn clean site:site scm-publish:publish-scm -Dscmpublish.dryRun=true
+
+		 and if that works:
+
+		 	mvn scm-publish:publish-scm
+
+		 -->
+
+		<scm-publish.checkoutDirectory>${project.build.directory}/scmpublish</scm-publish.checkoutDirectory>
+		<scm-publish.scmBranch>gh-pages</scm-publish.scmBranch>
+		<scm-publish.pubScmUrl>scm:git:https://github.com/pushtechnology/mvndar</scm-publish.pubScmUrl>
+		<scm-publish.siteDocOutputDirectory>${project.reporting.outputDirectory}</scm-publish.siteDocOutputDirectory>
 	</properties>
 
 
@@ -159,6 +176,25 @@
 					<version>${mavenPluginVersion}</version>
 					<configuration>
 						<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-project-info-reports-plugin</artifactId>
+					<version>2.7</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-scm-publish-plugin</artifactId>
+					<configuration>
+						<checkoutDirectory>${scm-publish.checkoutDirectory}</checkoutDirectory>
+						<checkinComment>Publishing Site Docs for
+							${project.artifactId}:${project.version}.</checkinComment>
+						<content>${scm-publish.siteDocOutputDirectory}</content>
+						<skipDeletedFiles>true</skipDeletedFiles>
+						<pubScmUrl>${scm-publish.pubScmUrl}</pubScmUrl>
+						<scmBranch>${scm-publish.scmBranch}</scmBranch>
 					</configuration>
 				</plugin>
 			</plugins>
