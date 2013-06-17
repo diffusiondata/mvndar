@@ -34,35 +34,35 @@ import org.mockito.Mock;
  */
 public class CreateManifestTaskTest {
 
-  @Mock
-  private Log log;
+    @Mock
+    private Log log;
 
-  @Mock
-  private DARMojoContext context;
+    @Mock
+    private DARMojoContext context;
 
-  private final MavenArchiveConfiguration archiveConfiguration = new MavenArchiveConfiguration();
+    private final MavenArchiveConfiguration archiveConfiguration = new MavenArchiveConfiguration();
 
-  @Before
-  public void setUp() {
-    initMocks(this);
+    @Before
+    public void setUp() {
+	initMocks(this);
 
-    when(context.getLog()).thenReturn(log);
-    when(context.getArchiveConfiguration())
-        .thenReturn(archiveConfiguration);
-  }
+	when(context.getLog()).thenReturn(log);
+	when(context.getArchiveConfiguration())
+		.thenReturn(archiveConfiguration);
+    }
 
-  @Test
-  public void test() throws Exception {
-    when(context.getMinimumDiffusionVersion()).thenReturn("some version");
+    @Test
+    public void test() throws Exception {
+	when(context.getMinimumDiffusionVersion()).thenReturn("some version");
 
-    final CreateManifestTask packageManifest = new CreateManifestTask();
-    packageManifest.perform(context);
+	final CreateManifestTask packageManifest = new CreateManifestTask();
+	packageManifest.perform(context);
 
-    final Map<String, String> manifestEntries =
-        archiveConfiguration.getManifestEntries();
-    assertEquals(1, manifestEntries.size());
-    assertEquals(
-      Pair.of("Diffusion-Version", "some version"),
-      manifestEntries.entrySet().iterator().next());
-  }
+	final Map<String, String> manifestEntries =
+		archiveConfiguration.getManifestEntries();
+	assertEquals(1, manifestEntries.size());
+	assertEquals(
+		Pair.of("Diffusion-Version", "some version"),
+		manifestEntries.entrySet().iterator().next());
+    }
 }
