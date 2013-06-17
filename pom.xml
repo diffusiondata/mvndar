@@ -1,0 +1,195 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.pushtechnology</groupId>
+	<artifactId>dar-maven-plugin</artifactId>
+	<packaging>maven-plugin</packaging>
+	<version>0.1-SNAPSHOT</version>
+	<name>${project.artifactId}</name>
+	<url>https://github.com/pushtechnology/mvndar</url>
+	<description>Maven plugin for creating Diffusion DAR files.</description>
+
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+
+	<developers>
+		<developer>
+			<name>Philip Aston</name>
+			<timezone>0</timezone>
+			<email>paston at pushtechnology.com</email>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>http://sourceforge.net/p/grinder/code/ci/master/tree/</url>
+		<connection>https://github.com/pushtechnology/mvndar</connection>
+	</scm>
+
+	<properties>
+		<mavenArchiverVersion>2.5</mavenArchiverVersion>
+		<mavenVersion>2.0.6</mavenVersion>
+		<mavenPluginVersion>3.1</mavenPluginVersion>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugin-tools</groupId>
+			<artifactId>maven-plugin-annotations</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-archiver</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-artifact</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.maven.plugin-testing</groupId>
+			<artifactId>maven-plugin-testing-harness</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-plugin-api</artifactId>
+				<version>${mavenVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.maven.plugin-tools</groupId>
+				<artifactId>maven-plugin-annotations</artifactId>
+				<version>${mavenPluginVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-archiver</artifactId>
+				<version>${mavenArchiverVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-artifact</artifactId>
+				<version>${mavenVersion}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.maven.plugin-testing</groupId>
+				<artifactId>maven-plugin-testing-harness</artifactId>
+				<version>1.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.11</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>1.9.5</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.1</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.5.1</version>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+						<optimize>true</optimize>
+						<showDeprecation>true</showDeprecation>
+						<showWarnings>true</showWarnings>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>${mavenPluginVersion}</version>
+					<configuration>
+						<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-plugin-plugin</artifactId>
+				<configuration>
+					<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+				</configuration>
+				<executions>
+					<execution>
+						<id>generate-descriptor</id>
+						<goals>
+							<goal>descriptor</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<artifactId>maven-plugin-plugin</artifactId>
+				<version>${mavenPluginVersion}</version>
+			</plugin>
+		</plugins>
+	</reporting>
+
+</project>
