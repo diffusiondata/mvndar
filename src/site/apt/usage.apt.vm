@@ -1,0 +1,133 @@
+ ------
+ Usage
+ ------
+ Philip Aston
+ ------
+ 2013-07-17
+ ------
+
+Usage
+
+  This page contains some examples of how to use the <<<mvndar>>> plugin.
+
+* How to build a DAR file
+
+  To use the plugin, reference it from your project's <<<pom.xml>>>
+  file.
+
++-----------------+
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.acme</groupId>
+  <artifactId>mypublisher</artifactId>
+  <version>1.23</version>
+  <packaging>dar</packaging>
+  ...
+  <build>
+    <plugins>
+      ...
+      <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <extensions>true</extensions>
+      </plugin>
+      ...
+    </plugins>
+  </build>
+  ...
+</project>
++-----------------+
+
+  The <<<\<extensions>true</extensions\>>>> line is required so that
+  Maven knows the plugin defines a new packaging type.
+
+  With the packaging type of the project set to <<<dar>>> as shown, the
+  plugin will run whenever the project passes the "package" phase. You
+  can execute it using the command below:
+
++-----------------+
+mvn package
++-----------------+
+
+  The <<<dar>>> file will be generated in your project's <<<target>>>
+  directory.
+
+* Default behaviour
+
+** Project output
+
+  The plugin will package the project's compiled classes and resources
+  in the <<<ext>>> directory of the DAR file so they are available in
+  the runtime classpath when it is deployed to a Diffusion server.
+
+** Dependencies
+
+  A subset of the project's dependencies will be added to the
+  <<<ext>>> directory. The following rules are used to filter the
+  dependencies.
+
+  * The dependency type must be <<<jar>>>.
+
+  * The dependency scope must be <<<compile>>>, <<<runtime>>>, or
+  <<<system>>>. Any <<<provided>>> and <<<test>>> dependencies will
+  not be included.
+
+  * Optional dependencies will not be included.
+
+  * A <<<com.pushtechnology:diffusion-api>>> dependency will not be
+  included, since the server provides these classes.
+
+** Resources
+
+  Any content in <<<data>>>, <<<etc>>>, or <<<html>>> subdirectories
+  of <<<src/main/diffusion>>> will be added to the DAR file.
+
+** Manifest
+
+  A <<<Diffusion-Version>>> header will be added to the DAR manifest.
+
+* How to include/exclude content from the <<<dar>>> artifact
+
+  You can customise what is included or excluded from the project
+  output by specifying a list of fileset patterns using
+  <<<\<outputIncludes\>>>>/<<<\<outputInclude\>>>> or
+  <<<\<outputExcludes\>>>>/<<<\<outputExclude\>>>>.
+
+  Similarly, you can filter the content from <<<src/main/diffusion>>>
+  using <<<\<diffusionIncludes\>>>>/<<<\<diffusionInclude\>>>> or
+  <<<\<diffusionExcludes\>>>>/<<<\<diffusionExclude\>>>>.
+
+* How to alter the project manifest
+
+  The <<<Diffusion-Version>>> header value defaults to
+  <<4.5>>. It can be changed using <<<\<diffusionMinimumValue\>>>>.
+
++-----------------+
+<project>
+  ...
+  <build>
+    <plugins>
+      ...
+      <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+          <diffusionMinimumValue>4.6</diffusionMinimumValue>
+        </configuration>
+      </plugin>
+      ...
+    </plugins>
+  </build>
+  ...
+</project>
++-----------------+
+
+  To handle archiving, the Maven DAR Plugin uses
+  {{{http://maven.apache.org/shared/maven-archiver/index.html}Maven Archiver}} ${mavenArchiverVersion}.
+
+
+~~ complete this section
+~~ mvn-site-plugin options / reporting

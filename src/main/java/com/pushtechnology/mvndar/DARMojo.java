@@ -49,7 +49,7 @@ import org.codehaus.plexus.archiver.jar.JarArchiver;
 public class DARMojo extends AbstractMojo {
 
     /**
-     * The project output directory. The contents will be placed in the DAR
+     * The project output directory. The contents will be packaged in the DAR
      * {@code ext} directory.
      *
      * @see #outputIncludes
@@ -81,12 +81,12 @@ public class DARMojo extends AbstractMojo {
     private String finalName;
 
     /**
-     * The minimum version number of Diffusion™ on which the DAR can be
+     * The minimum version number of Diffusion on which the DAR can be
      * deployed.
      */
     // Maybe calculate default from the manifest of an API jar found in the
     // dependencies?
-    @Parameter(defaultValue = "4.6")
+    @Parameter(defaultValue = "4.5")
     private String minimumDiffusionVersion;
 
     /**

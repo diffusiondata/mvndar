@@ -1,0 +1,28 @@
+ ------
+ Introduction
+ ------
+ Philip Aston
+ ------
+ 2013-07-17
+ ------
+
+
+mvndar - A Maven plugin to create DAR files
+
+  Copyright 2013 Push Technology.
+ 
+  Licensed under the {{{./license.html}Apache License, Version 2.0}}.
+
+  <<mvndar>> is a Maven plugin for creating Diffusion™ Archive (DAR) files.
+
+  The plugin  provides the following features:
+
+  * A new <<<dar>>> packaging type.
+
+  * Packaging of project build output and dependencies within the DAR file's <<<ext>>> directory.
+
+  * Inclusion of other resources such as <<<etc>>> or <<<html>>>  configuration files within the DAR.
+
+  * Automatic addition of a <<<Diffusion-Version>>> header to the DAR manifest.
+
+
