@@ -28,8 +28,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 /**
- * Unit tests for {@link CreateManifest}.
- *
+ * Unit tests for {@link CreateManifestTask}.
+ * 
  * @author Philip Aston
  */
 public class CreateManifestTaskTest {
