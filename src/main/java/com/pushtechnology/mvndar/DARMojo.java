@@ -38,7 +38,7 @@ import org.codehaus.plexus.archiver.jar.JarArchiver;
 
 /**
  * Goal that creates a Diffusion™ Archive (DAR) file.
- *
+ * 
  * @author Philip Aston
  */
 @Mojo(
@@ -51,7 +51,7 @@ public class DARMojo extends AbstractMojo {
     /**
      * The project output directory. The contents will be packaged in the DAR
      * {@code ext} directory.
-     *
+     * 
      * @see #outputIncludes
      * @see #outputExcludes
      */
@@ -61,7 +61,7 @@ public class DARMojo extends AbstractMojo {
     /**
      * Directory containing additional resources to add to the DAR file.
      * Typically contains at least {@code etc/Publishers.xml}.
-     *
+     * 
      * @see #diffusionIncludes
      * @see #diffusionExcludes
      */
@@ -81,8 +81,7 @@ public class DARMojo extends AbstractMojo {
     private String finalName;
 
     /**
-     * The minimum version number of Diffusion on which the DAR can be
-     * deployed.
+     * The minimum version number of Diffusion on which the DAR can be deployed.
      */
     // Maybe calculate default from the manifest of an API jar found in the
     // dependencies?
@@ -130,7 +129,7 @@ public class DARMojo extends AbstractMojo {
      * Archiver Reference</a>.
      */
     @Parameter
-    private final MavenArchiveConfiguration archiveConfiguration = new MavenArchiveConfiguration();
+    private final MavenArchiveConfiguration archiver = new MavenArchiveConfiguration();
 
     @Component(role = Archiver.class, hint = "jar")
     private JarArchiver jarArchiver;
@@ -169,18 +168,18 @@ public class DARMojo extends AbstractMojo {
 
 	    getLog().info("Assembling DAR [" + project.getArtifactId() + "]");
 
-	    final MavenArchiver archiver = new MavenArchiver();
-	    archiver.setArchiver(jarArchiver);
-	    archiver.setOutputFile(darFile);
+	    final MavenArchiver mvnArchiver = new MavenArchiver();
+	    mvnArchiver.setArchiver(jarArchiver);
+	    mvnArchiver.setOutputFile(darFile);
 
 	    final DARMojoContext context =
-		    new DARMojoContextImpl(archiver.getArchiver());
+		    new DARMojoContextImpl(mvnArchiver.getArchiver());
 
 	    for (final PackagingTask t : packagingTasks) {
 		t.perform(context);
 	    }
 
-	    archiver.createArchive(session, project, archiveConfiguration);
+	    mvnArchiver.createArchive(session, project, archiver);
 
 	    if (classifier != null) {
 		projectHelper.attachArtifact(
@@ -228,7 +227,7 @@ public class DARMojo extends AbstractMojo {
 
 	@Override
 	public MavenArchiveConfiguration getArchiveConfiguration() {
-	    return archiveConfiguration;
+	    return archiver;
 	}
 
 	@Override

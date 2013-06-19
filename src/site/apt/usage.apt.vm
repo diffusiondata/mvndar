@@ -85,7 +85,7 @@ mvn package
 
 ** Manifest
 
-  A <<<Diffusion-Version>>> header will be added to the DAR manifest.
+  A <<<Diffusion-Version>>> entry will be added to the DAR manifest.
 
 * How to include/exclude content from the <<<dar>>> artifact
 
@@ -98,9 +98,9 @@ mvn package
   using <<<\<diffusionIncludes\>>>>/<<<\<diffusionInclude\>>>> or
   <<<\<diffusionExcludes\>>>>/<<<\<diffusionExclude\>>>>.
 
-* How to alter the project manifest
+* How to change the minimum Diffusion version
 
-  The <<<Diffusion-Version>>> header value defaults to
+  The <<<Diffusion-Version>>> entry value defaults to
   <<4.5>>. It can be changed using <<<\<diffusionMinimumValue\>>>>.
 
 +-----------------+
@@ -125,9 +125,37 @@ mvn package
 </project>
 +-----------------+
 
+* How to adjust other contents of the DAR archive
+
   To handle archiving, the Maven DAR Plugin uses
-  {{{http://maven.apache.org/shared/maven-archiver/index.html}Maven Archiver}} ${mavenArchiverVersion}.
+  {{{http://maven.apache.org/shared/maven-archiver/index.html}Maven Archiver}} ${mavenArchiverVersion}. This
+  allows control over the DAR manifest, whether the Maven <<<pom.xml>>> and <<<pom.properties>>> files
+  are added to the DAR, and whether the DAR file is compressed.
 
+  For example, here's how to add implementation entries to the manifest.
 
-~~ complete this section
-~~ mvn-site-plugin options / reporting
++-----------------+
+<project>
+  ...
+  <build>
+    <plugins>
+      ...
+      <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+          <archiver>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
+          </archiver>
+        </configuration>
+      </plugin>
+      ...
+    </plugins>
+  </build>
+  ...
+</project>
++-----------------+
