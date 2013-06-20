@@ -15,8 +15,19 @@
 
 package com.pushtechnology.mvndar;
 
-import java.io.File;
+import static java.util.Arrays.asList;
+import static org.apache.maven.artifact.Artifact.SCOPE_COMPILE;
+import static org.apache.maven.artifact.Artifact.SCOPE_TEST;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
 import com.pushtechnology.mvndar.stubs.DARMavenProjectStub;
@@ -28,14 +39,23 @@ import com.pushtechnology.mvndar.stubs.DARMavenProjectStub;
  */
 public class DARMojoTest extends AbstractMojoTestCase {
 
-    private File testBaseDirectory;
+    private static File testBaseDirectory =
+	    new File(getBasedir(), "target/mojo-test");
+
+    private File buildDirectory;
+    private File simplePom;
 
     @Override
     protected void setUp() throws Exception {
 	super.setUp();
 
-	testBaseDirectory = new File(getBasedir(), "target/mojo-test");
 	testBaseDirectory.mkdirs();
+	buildDirectory = File.createTempFile("build", "", testBaseDirectory);
+	buildDirectory.delete();
+	buildDirectory.mkdirs();
+
+	simplePom = getTestFile("src/test/resources/unit/basic-test/pom.xml");
+	assertTrue(simplePom.exists());
     }
 
     @Override
@@ -43,34 +63,117 @@ public class DARMojoTest extends AbstractMojoTestCase {
 	super.tearDown();
     }
 
-    private File getTestBuildDirectory(final String name) {
-	return new File(testBaseDirectory, name);
-    }
+    private DARMojo getMojo(final File buildDirectory) throws Exception {
 
-    public void testBasic() throws Exception {
-	final File pom = getTestFile("src/test/resources/unit/basic-test/pom.xml");
-	assertTrue(pom.exists());
+	final DARMojo mojo = (DARMojo) lookupMojo("dar", simplePom);
 
-	final DARMojo mojo = (DARMojo) lookupMojo("dar", pom);
-
-	final File buildDirectory = getTestBuildDirectory("basic");
-
-	setVariableValueToObject(mojo, "project",
-		new DARMavenProjectStub(buildDirectory, pom));
 	setVariableValueToObject(mojo, "buildDirectory",
 		buildDirectory.getAbsolutePath());
 	setVariableValueToObject(mojo, "finalName", "mydar");
-
 	setVariableValueToObject(mojo, "outputDirectory",
 		new File("some missing directory"));
 	setVariableValueToObject(mojo, "diffusionResourceDirectory",
 		new File("some missing directory"));
+
+	return mojo;
+    }
+
+    public void testBasic() throws Exception {
+
+	final DARMojo mojo = getMojo(buildDirectory);
 	setVariableValueToObject(mojo, "minimumDiffusionVersion", "1.23");
+	setVariableValueToObject(mojo, "project",
+		new DARMavenProjectStub(buildDirectory, simplePom));
 
 	mojo.execute();
 
-	final JarReflector jar = new JarReflector(new File(buildDirectory,
-		"mydar.dar"));
+	final JarReflector jar =
+		new JarReflector(new File(buildDirectory, "mydar.dar"));
 	jar.assertEntry("Diffusion-Version", "1.23");
+    }
+
+    public void testDependencies() throws Exception {
+
+	final DARMojo mojo = getMojo(buildDirectory);
+
+	final DARMavenProjectStub project =
+		new DARMavenProjectStub(buildDirectory, simplePom);
+	setVariableValueToObject(mojo, "project", project);
+
+	final Set<Artifact> dependencyArtifacts = asSet(
+		createArtifact("group", "a1", "jar", true, SCOPE_COMPILE),
+		createArtifact("group", "a2", "jar", false, SCOPE_COMPILE),
+		createArtifact("group", "a3", "jar", false, SCOPE_TEST),
+		createArtifact("com.pushtechnology", "diffusion-api", "jar",
+			false, SCOPE_COMPILE),
+		createArtifact("group", "a4", "jar", false, SCOPE_COMPILE)
+		);
+
+	project.setDependencyArtifacts(dependencyArtifacts);
+
+	mojo.execute();
+
+	final JarReflector jar =
+		new JarReflector(new File(buildDirectory, "mydar.dar"));
+	jar.assertEntries(asSet("ext/group-a2.jar", "ext/group-a4.jar"));
+    }
+
+    public void testResources() throws Exception {
+
+	final DARMojo mojo = getMojo(buildDirectory);
+
+	final DARMavenProjectStub project =
+		new DARMavenProjectStub(buildDirectory, simplePom);
+	setVariableValueToObject(mojo, "project", project);
+
+	final Set<Artifact> dependencyArtifacts = asSet(
+		createArtifact("group", "a1", "jar", true, SCOPE_COMPILE),
+		createArtifact("group", "a2", "jar", false, SCOPE_COMPILE),
+		createArtifact("group", "a3", "jar", false, SCOPE_TEST),
+		createArtifact("com.pushtechnology", "diffusion-api", "jar",
+			false, SCOPE_COMPILE),
+		createArtifact("group", "a4", "jar", false, SCOPE_COMPILE)
+		);
+
+	project.setDependencyArtifacts(dependencyArtifacts);
+
+	mojo.execute();
+
+	final JarReflector jar =
+		new JarReflector(new File(buildDirectory, "mydar.dar"));
+	jar.assertEntries(asSet("ext/group-a2.jar", "ext/group-a4.jar"));
+    }
+
+    private Artifact createArtifact(
+	    final String groupId,
+	    final String artifactId,
+	    final String type,
+	    final boolean optional,
+	    final String scope) throws IOException {
+
+	final Artifact result = mock(Artifact.class);
+	when(result.isOptional()).thenReturn(optional);
+	when(result.getScope()).thenReturn(scope);
+	when(result.getGroupId()).thenReturn(groupId);
+	when(result.getArtifactId()).thenReturn(artifactId);
+	when(result.getType()).thenReturn(type);
+
+	final File f =
+		new File(buildDirectory,
+			String.format("%s-%s.%s",
+				groupId, artifactId, type));
+	f.createNewFile();
+
+	when(result.getFile()).thenReturn(f);
+
+	return result;
+    }
+
+    public static final <T> Set<T> asSet(final T... a) {
+	return asSet(asList(a));
+    }
+
+    public static final <T> Set<T> asSet(final Collection<T> list) {
+	return new HashSet<T>(list);
     }
 }

@@ -15,10 +15,14 @@
 
 package com.pushtechnology.mvndar;
 
+import static java.util.Collections.list;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
@@ -47,5 +51,23 @@ class JarReflector {
     public void assertEntry(final String key, final String value)
 	    throws IOException {
 	assertEquals(value, jar.getManifest().getMainAttributes().getValue(key));
+    }
+
+    public void assertEntries(final Set<String> entries) {
+	final Set<String> containedEntries = new HashSet<String>();
+
+	for (final JarEntry i : list(jar.entries())) {
+	    if (i.getName().startsWith("META-INF/")) {
+		continue;
+	    }
+
+	    if (i.isDirectory()) {
+		continue;
+	    }
+
+	    containedEntries.add(i.getName());
+	}
+
+	assertEquals(entries, containedEntries);
     }
 }
