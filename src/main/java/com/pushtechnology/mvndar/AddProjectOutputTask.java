@@ -35,7 +35,7 @@ class AddProjectOutputTask implements PackagingTask {
     @Override
     public void perform(final DARMojoContext context) throws IOException {
 
-	final File outputDirectory = context.getDiffusionDirectory();
+	final File outputDirectory = context.getOutputDirectory();
 
 	if (outputDirectory.exists()) {
 	    final DefaultFileSet fileSet = new DefaultFileSet();
