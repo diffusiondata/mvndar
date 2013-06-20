@@ -20,6 +20,7 @@ import static java.util.Collections.emptySet;
 
 import java.io.File;
 
+import org.apache.maven.model.Build;
 import org.apache.maven.project.MavenProject;
 
 /**
@@ -32,12 +33,18 @@ import org.apache.maven.project.MavenProject;
  */
 public class DARMavenProjectStub extends MavenProject {
 
-    public DARMavenProjectStub(final File pom) throws Exception {
+    public DARMavenProjectStub(final File buildDirectory, final File pom)
+	    throws Exception {
+
 	super(new DARModelStub());
 
 	setExecutionProject(this);
 
 	setFile(pom);
+
+	final Build build = new Build();
+	build.setDirectory(buildDirectory.getAbsolutePath());
+	setBuild(build);
 
 	setArtifact(new DARArtifactStub());
 

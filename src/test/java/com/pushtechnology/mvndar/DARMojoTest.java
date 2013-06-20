@@ -55,7 +55,8 @@ public class DARMojoTest extends AbstractMojoTestCase {
 
 	final File buildDirectory = getTestBuildDirectory("basic");
 
-	setVariableValueToObject(mojo, "project", new DARMavenProjectStub(pom));
+	setVariableValueToObject(mojo, "project",
+		new DARMavenProjectStub(buildDirectory, pom));
 	setVariableValueToObject(mojo, "buildDirectory",
 		buildDirectory.getAbsolutePath());
 	setVariableValueToObject(mojo, "finalName", "mydar");
