@@ -126,22 +126,55 @@ public class DARMojoTest extends AbstractMojoTestCase {
 		new DARMavenProjectStub(buildDirectory, simplePom);
 	setVariableValueToObject(mojo, "project", project);
 
-	final Set<Artifact> dependencyArtifacts = asSet(
-		createArtifact("group", "a1", "jar", true, SCOPE_COMPILE),
-		createArtifact("group", "a2", "jar", false, SCOPE_COMPILE),
-		createArtifact("group", "a3", "jar", false, SCOPE_TEST),
-		createArtifact("com.pushtechnology", "diffusion-api", "jar",
-			false, SCOPE_COMPILE),
-		createArtifact("group", "a4", "jar", false, SCOPE_COMPILE)
-		);
+	final File d = new File(buildDirectory, "resources");
+	d.mkdir();
 
-	project.setDependencyArtifacts(dependencyArtifacts);
+	setVariableValueToObject(mojo, "diffusionResourceDirectory", d);
+
+	new File(d, "etc").mkdir();
+	new File(d, "html").mkdir();
+	new File(d, "data/x").mkdirs();
+	new File(d, "foo").mkdir();
+
+	new File(d, "etc/Publishers.xml").createNewFile();
+	new File(d, "foo/ignored.txt").createNewFile();
+	new File(d, "html/hello.html").createNewFile();
+	new File(d, "data/x/y").createNewFile();
 
 	mojo.execute();
 
 	final JarReflector jar =
 		new JarReflector(new File(buildDirectory, "mydar.dar"));
-	jar.assertEntries(asSet("ext/group-a2.jar", "ext/group-a4.jar"));
+	jar.assertEntries(asSet(
+		"etc/Publishers.xml", "html/hello.html", "data/x/y"));
+    }
+
+    public void testOutput() throws Exception {
+
+	final DARMojo mojo = getMojo(buildDirectory);
+
+	final DARMavenProjectStub project =
+		new DARMavenProjectStub(buildDirectory, simplePom);
+	setVariableValueToObject(mojo, "project", project);
+
+	final File d = new File(buildDirectory, "output");
+	d.mkdir();
+
+	setVariableValueToObject(mojo, "outputDirectory", d);
+	setVariableValueToObject(mojo, "outputExcludes",
+		new String[] { "foo/**" });
+
+	new File(d, "x/y").mkdirs();
+	new File(d, "foo").mkdir();
+
+	new File(d, "foo/ignored.txt").createNewFile();
+	new File(d, "x/y/z").createNewFile();
+
+	mojo.execute();
+
+	final JarReflector jar =
+		new JarReflector(new File(buildDirectory, "mydar.dar"));
+	jar.assertEntries(asSet("ext/x/y/z"));
     }
 
     private Artifact createArtifact(

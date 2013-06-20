@@ -51,7 +51,6 @@ class AddProjectOutputTask implements PackagingTask {
 	} else {
 	    context.getLog().warn(
 		    outputDirectory + " does not exist, skipping");
-
 	}
     }
 }
