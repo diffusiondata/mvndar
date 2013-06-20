@@ -16,13 +16,14 @@ package com.pushtechnology.mvndar;
 
 import static com.pushtechnology.mvndar.DARMojo.or;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.codehaus.plexus.archiver.util.DefaultFileSet;
 
 /**
  * Add the project output to the {@code ext} directory.
- *
+ * 
  * @author Philip Aston
  */
 class AddProjectOutputTask implements PackagingTask {
@@ -34,15 +35,23 @@ class AddProjectOutputTask implements PackagingTask {
     @Override
     public void perform(final DARMojoContext context) throws IOException {
 
-	final DefaultFileSet fileSet = new DefaultFileSet();
+	final File outputDirectory = context.getDiffusionDirectory();
 
-	fileSet.setDirectory(context.getOutputDirectory());
-	fileSet.setPrefix(context.getExtDirectoryName());
-	fileSet.setIncludes(
-		or(context.getOutputIncludes(), DEFAULT_INCLUDES));
-	fileSet.setExcludes(
-		or(context.getOutputExcludes(), DEFAULT_EXCLUDES));
+	if (outputDirectory.exists()) {
+	    final DefaultFileSet fileSet = new DefaultFileSet();
 
-	context.getArchiver().addFileSet(fileSet);
+	    fileSet.setDirectory(context.getOutputDirectory());
+	    fileSet.setPrefix(context.getExtDirectoryName());
+	    fileSet.setIncludes(
+		    or(context.getOutputIncludes(), DEFAULT_INCLUDES));
+	    fileSet.setExcludes(
+		    or(context.getOutputExcludes(), DEFAULT_EXCLUDES));
+
+	    context.getArchiver().addFileSet(fileSet);
+	} else {
+	    context.getLog().warn(
+		    outputDirectory + " does not exist, skipping");
+
+	}
     }
 }
