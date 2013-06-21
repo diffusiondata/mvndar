@@ -1,7 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.pushtechnology</groupId>
 	<artifactId>dar-maven-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
 	<version>0.1-SNAPSHOT</version>
@@ -9,9 +8,18 @@
 	<url>https://github.com/pushtechnology/mvndar</url>
 	<description>A Maven plugin for creating Diffusion DAR files.</description>
 
-	<prerequisites>
-		<maven>3.0</maven>
-	</prerequisites>
+	<parent>
+		<groupId>com.pushtechnology</groupId>
+		<artifactId>diffusion-public</artifactId>
+		<version>4.6.0-SNAPSHOT</version>
+	</parent>
+
+	<repositories>
+		<repository>
+			<id>push-update-site</id>
+			<url>http://download.pushtechnology.com/maven/</url>
+		</repository>
+	</repositories>
 
 	<developers>
 		<developer>
@@ -28,11 +36,6 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-
-	<organization>
-		<name>Push Technology</name>
-		<url>http://www.pushtechnology.com</url>
-	</organization>
 
 	<scm>
 		<url>http://sourceforge.net/p/grinder/code/ci/master/tree/</url>
@@ -55,7 +58,6 @@
 		<scm-publish.pubScmUrl>scm:git:https://github.com/pushtechnology/mvndar</scm-publish.pubScmUrl>
 		<scm-publish.siteDocOutputDirectory>${project.reporting.outputDirectory}</scm-publish.siteDocOutputDirectory>
 	</properties>
-
 
 	<dependencies>
 		<dependency>
