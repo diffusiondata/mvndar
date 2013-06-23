@@ -16,7 +16,7 @@
 
 	<repositories>
 		<repository>
-			<id>push-update-site</id>
+			<id>push-repository</id>
 			<url>http://download.pushtechnology.com/maven/</url>
 		</repository>
 	</repositories>
@@ -187,6 +187,11 @@
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.15</version>
 				</plugin>
+
+          			<plugin>
+					<artifactId>maven-surefire-report-plugin</artifactId>
+					<version>2.15</version>
+				</plugin>                      
 
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
