@@ -1,300 +1,300 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>dar-maven-plugin</artifactId>
-	<packaging>maven-plugin</packaging>
-	<version>0.1-SNAPSHOT</version>
-	<name>${project.artifactId}</name>
-	<url>https://github.com/pushtechnology/mvndar</url>
-	<description>A Maven plugin for creating Diffusion DAR files.</description>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>dar-maven-plugin</artifactId>
+    <packaging>maven-plugin</packaging>
+    <version>0.1-SNAPSHOT</version>
+    <name>${project.artifactId}</name>
+    <url>https://github.com/pushtechnology/mvndar</url>
+    <description>A Maven plugin for creating Diffusion DAR files.</description>
 
-	<parent>
-		<groupId>com.pushtechnology</groupId>
-		<artifactId>diffusion-public</artifactId>
-		<version>4.6.0-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>com.pushtechnology</groupId>
+        <artifactId>diffusion-public</artifactId>
+        <version>4.6.0-SNAPSHOT</version>
+    </parent>
 
-	<repositories>
-		<repository>
-			<id>push-repository</id>
-			<url>http://download.pushtechnology.com/maven/</url>
-		</repository>
-	</repositories>
+    <repositories>
+        <repository>
+            <id>push-repository</id>
+            <url>http://download.pushtechnology.com/maven/</url>
+        </repository>
+    </repositories>
 
-	<developers>
-		<developer>
-			<name>Philip Aston</name>
-			<timezone>0</timezone>
-			<email>paston at pushtechnology.com</email>
-		</developer>
-	</developers>
+    <developers>
+        <developer>
+            <name>Philip Aston</name>
+            <timezone>0</timezone>
+            <email>paston at pushtechnology.com</email>
+        </developer>
+    </developers>
 
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-	<scm>
-		<url>http://sourceforge.net/p/grinder/code/ci/master/tree/</url>
-		<connection>scm:git:https://github.com/pushtechnology/mvndar</connection>
-	</scm>
+    <scm>
+        <url>https://github.com/pushtechnology/mvndar</url>
+        <connection>scm:git:https://github.com/pushtechnology/mvndar</connection>
+    </scm>
 
-	<properties>
-		<mavenArchiverVersion>2.5</mavenArchiverVersion>
-		<mavenVersion>2.0.6</mavenVersion>
-		<mavenPluginVersion>3.2</mavenPluginVersion>
+    <properties>
+        <mavenArchiverVersion>2.5</mavenArchiverVersion>
+        <mavenVersion>2.0.6</mavenVersion>
+        <mavenPluginVersion>3.2</mavenPluginVersion>
 
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<!-- To publish the site documentation: -->
-		<!-- mvn clean site:site scm-publish:publish-scm -Dscmpublish.dryRun=true -->
-		<!-- and if that works: mvn scm-publish:publish-scm -->
+        <!-- To publish the site documentation: -->
+        <!-- mvn clean site:site scm-publish:publish-scm -Dscmpublish.dryRun=true -->
+        <!-- and if that works: mvn scm-publish:publish-scm -->
 
-		<scm-publish.checkoutDirectory>${project.build.directory}/scmpublish</scm-publish.checkoutDirectory>
-		<scm-publish.scmBranch>gh-pages</scm-publish.scmBranch>
-		<scm-publish.pubScmUrl>scm:git:https://github.com/pushtechnology/mvndar</scm-publish.pubScmUrl>
-		<scm-publish.siteDocOutputDirectory>${project.reporting.outputDirectory}</scm-publish.siteDocOutputDirectory>
-	</properties>
+        <scm-publish.checkoutDirectory>${project.build.directory}/scmpublish</scm-publish.checkoutDirectory>
+        <scm-publish.scmBranch>gh-pages</scm-publish.scmBranch>
+        <scm-publish.pubScmUrl>scm:git:https://github.com/pushtechnology/mvndar</scm-publish.pubScmUrl>
+        <scm-publish.siteDocOutputDirectory>${project.reporting.outputDirectory}</scm-publish.siteDocOutputDirectory>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-plugin-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven.plugin-tools</groupId>
-			<artifactId>maven-plugin-annotations</artifactId>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-archiver</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-artifact</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-archiver</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-artifact</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.apache.maven.plugin-testing</groupId>
-			<artifactId>maven-plugin-testing-harness</artifactId>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugin-testing</groupId>
+            <artifactId>maven-plugin-testing-harness</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-plugin-api</artifactId>
-				<version>${mavenVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven.plugin-tools</groupId>
-				<artifactId>maven-plugin-annotations</artifactId>
-				<version>${mavenPluginVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-archiver</artifactId>
-				<version>${mavenArchiverVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-artifact</artifactId>
-				<version>${mavenVersion}</version>
-			</dependency>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-plugin-api</artifactId>
+                <version>${mavenVersion}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.plugin-tools</groupId>
+                <artifactId>maven-plugin-annotations</artifactId>
+                <version>${mavenPluginVersion}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-archiver</artifactId>
+                <version>${mavenArchiverVersion}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-artifact</artifactId>
+                <version>${mavenVersion}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>org.apache.maven.plugin-testing</groupId>
-				<artifactId>maven-plugin-testing-harness</artifactId>
-				<version>1.2</version>
-			</dependency>
+            <dependency>
+                <groupId>org.apache.maven.plugin-testing</groupId>
+                <artifactId>maven-plugin-testing-harness</artifactId>
+                <version>1.2</version>
+            </dependency>
 
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.11</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-all</artifactId>
-				<version>1.9.5</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-lang3</artifactId>
-				<version>3.1</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.11</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.9.5</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
 
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.1</version>
-				</plugin>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
+                </plugin>
 
-				<plugin>
-					<artifactId>maven-plugin-plugin</artifactId>
-					<version>${mavenPluginVersion}</version>
-				</plugin>
+                <plugin>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <version>${mavenPluginVersion}</version>
+                </plugin>
 
-				<plugin>
-					<artifactId>maven-project-info-reports-plugin</artifactId>
-					<version>2.7</version>
-				</plugin>
+                <plugin>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>2.7</version>
+                </plugin>
 
-				<plugin>
-					<artifactId>maven-scm-publish-plugin</artifactId>
-					<version>1.0-beta-2</version>
-				</plugin>
+                <plugin>
+                    <artifactId>maven-scm-publish-plugin</artifactId>
+                    <version>1.0-beta-2</version>
+                </plugin>
 
-				<plugin>
-					<artifactId>maven-site-plugin</artifactId>
-					<version>3.3</version>
-				</plugin>
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.3</version>
+                </plugin>
 
-				<plugin>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.15</version>
-				</plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.15</version>
+                </plugin>
 
-          			<plugin>
-					<artifactId>maven-surefire-report-plugin</artifactId>
-					<version>2.15</version>
-				</plugin>                      
+                <plugin>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>2.15</version>
+                </plugin>
 
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>findbugs-maven-plugin</artifactId>
-					<version>2.5.2</version>
-				</plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>findbugs-maven-plugin</artifactId>
+                    <version>2.5.2</version>
+                </plugin>
 
-			</plugins>
-		</pluginManagement>
+            </plugins>
+        </pluginManagement>
 
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<optimize>true</optimize>
-					<showDeprecation>true</showDeprecation>
-					<showWarnings>true</showWarnings>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-plugin-plugin</artifactId>
-				<configuration>
-					<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
-				</configuration>
-				<executions>
-					<execution>
-						<id>generate-descriptor</id>
-						<goals>
-							<goal>descriptor</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <optimize>true</optimize>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <configuration>
+                    <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-descriptor</id>
+                        <goals>
+                            <goal>descriptor</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<plugin>
-				<artifactId>maven-scm-publish-plugin</artifactId>
-				<configuration>
-					<checkoutDirectory>${scm-publish.checkoutDirectory}</checkoutDirectory>
-					<checkinComment>Publishing Site Docs for
-						${project.artifactId}:${project.version}.</checkinComment>
-					<content>${scm-publish.siteDocOutputDirectory}</content>
-					<skipDeletedFiles>true</skipDeletedFiles>
-					<pubScmUrl>${scm-publish.pubScmUrl}</pubScmUrl>
-					<scmBranch>${scm-publish.scmBranch}</scmBranch>
-				</configuration>
-			</plugin>
+            <plugin>
+                <artifactId>maven-scm-publish-plugin</artifactId>
+                <configuration>
+                    <checkoutDirectory>${scm-publish.checkoutDirectory}</checkoutDirectory>
+                    <checkinComment>Publishing Site Docs for
+                        ${project.artifactId}:${project.version}.</checkinComment>
+                    <content>${scm-publish.siteDocOutputDirectory}</content>
+                    <skipDeletedFiles>true</skipDeletedFiles>
+                    <pubScmUrl>${scm-publish.pubScmUrl}</pubScmUrl>
+                    <scmBranch>${scm-publish.scmBranch}</scmBranch>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<artifactId>maven-site-plugin</artifactId>
-				<configuration>
-					<reportPlugins>
-						<plugin>
-							<artifactId>maven-project-info-reports-plugin</artifactId>
-							<reports>
-								<report>index</report>
-								<report>summary</report>
-								<report>license</report>
-								<report>dependency-info</report>
-								<report>scm</report>
-								<report>dependencies</report>
-								<report>project-team</report>
+            <plugin>
+                <artifactId>maven-site-plugin</artifactId>
+                <configuration>
+                    <reportPlugins>
+                        <plugin>
+                            <artifactId>maven-project-info-reports-plugin</artifactId>
+                            <reports>
+                                <report>index</report>
+                                <report>summary</report>
+                                <report>license</report>
+                                <report>dependency-info</report>
+                                <report>scm</report>
+                                <report>dependencies</report>
+                                <report>project-team</report>
 
-								<!-- <report>dependency-convergence</report> -->
-								<!-- <report>modules</report> -->
-								<!-- <report>mailing-list</report> -->
-								<!-- <report>issue-tracking</report> -->
-								<!-- <report>cim</report> -->
-								<!-- <report>dependency-management</report> -->
-								<!-- <report>distribution-management</report> -->
-								<report>plugins</report>
-								<!-- <report>plugin-management</report> -->
-							</reports>
-						</plugin>
+                                <!-- <report>dependency-convergence</report> -->
+                                <!-- <report>modules</report> -->
+                                <!-- <report>mailing-list</report> -->
+                                <!-- <report>issue-tracking</report> -->
+                                <!-- <report>cim</report> -->
+                                <!-- <report>dependency-management</report> -->
+                                <!-- <report>distribution-management</report> -->
+                                <report>plugins</report>
+                                <!-- <report>plugin-management</report> -->
+                            </reports>
+                        </plugin>
 
-						<plugin>
-							<artifactId>maven-surefire-report-plugin</artifactId>
-						</plugin>
+                        <plugin>
+                            <artifactId>maven-surefire-report-plugin</artifactId>
+                        </plugin>
 
-						<plugin>
-							<groupId>org.codehaus.mojo</groupId>
-							<artifactId>findbugs-maven-plugin</artifactId>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>findbugs-maven-plugin</artifactId>
 
-							<configuration>
-								<effort>Max</effort>
-								<threshold>Medium</threshold>
-							</configuration>
-						</plugin>
+                            <configuration>
+                                <effort>Max</effort>
+                                <threshold>Medium</threshold>
+                            </configuration>
+                        </plugin>
 
-					</reportPlugins>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+                    </reportPlugins>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
-	<reporting>
-		<plugins>
-			<plugin>
-				<artifactId>maven-plugin-plugin</artifactId>
-				<version>${mavenPluginVersion}</version>
-			</plugin>
-		</plugins>
-	</reporting>
+    <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>${mavenPluginVersion}</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>
