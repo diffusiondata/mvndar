@@ -108,7 +108,7 @@ mvn package
 * How to change the minimum Diffusion version
 
   The <<<Diffusion-Version>>> entry value defaults to
-  <<4.5>>. It can be changed using <<<\<diffusionMinimumValue\>>>>.
+  <<4.5.0>>. It can be changed using <<<\<minimumDiffusionVersion\>>>>.
 
 +-----------------+
 <project>
@@ -122,7 +122,7 @@ mvn package
         <version>${project.version}</version>
         <extensions>true</extensions>
         <configuration>
-          <diffusionMinimumValue>4.6</diffusionMinimumValue>
+          <minimumDiffusionVersion>4.6.0</minimumDiffusionVersion>
         </configuration>
       </plugin>
       ...
