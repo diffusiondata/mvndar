@@ -85,7 +85,7 @@ public class DARMojo extends AbstractMojo {
      */
     // Maybe calculate default from the manifest of an API jar found in the
     // dependencies?
-    @Parameter(defaultValue = "4.5")
+    @Parameter(defaultValue = "4.5.0")
     private String minimumDiffusionVersion;
 
     /**
