@@ -23,12 +23,12 @@ Usage
   <version>1.23</version>
   <packaging>dar</packaging>
   ...
-  <repositories>
-    <repository>
+  <pluginRepositories>
+    <pluginRepository>
       <id>push-repository</id>
       <url>http://download.pushtechnology.com/maven/</url>
-    </repository>
-  </repositories>
+    </pluginRepository>
+  </pluginRepositories>
   ...
   <build>
     <plugins>
