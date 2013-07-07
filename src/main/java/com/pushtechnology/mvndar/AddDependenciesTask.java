@@ -18,12 +18,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.logging.Log;
 
 /**
  * Package the project dependencies in the {@code ext} directory.
- *
+ * 
  * @author Philip Aston
  */
 class AddDependenciesTask implements PackagingTask {
@@ -57,10 +58,15 @@ class AddDependenciesTask implements PackagingTask {
 	    if (context.getExtTypes().contains(a.getType())) {
 		final File f = a.getFile().getCanonicalFile();
 
-		context.getArchiver().addFile(f,
-			context.getExtDirectoryName() + f.getName());
+		final File target =
+			FileUtils.getFile(
+				context.getPrefixDirectoryName(),
+				context.getExtDirectoryName(),
+				f.getName());
 
-		log.debug(" Dependency " + a + " has been copied to ext.");
+		context.getArchiver().addFile(f, target.toString());
+
+		log.debug(" Dependency " + a + " has been copied to " + target);
 	    }
 	    else {
 		log.debug("Ignoring dependency: " + a);

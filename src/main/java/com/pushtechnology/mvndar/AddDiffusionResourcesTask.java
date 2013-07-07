@@ -19,9 +19,11 @@ import static com.pushtechnology.mvndar.DARMojo.or;
 import java.io.File;
 import java.io.IOException;
 
+import org.codehaus.plexus.archiver.util.DefaultFileSet;
+
 /**
  * Package the provided resources.
- *
+ * 
  * @author Philip Aston
  */
 class AddDiffusionResourcesTask implements PackagingTask {
@@ -35,14 +37,21 @@ class AddDiffusionResourcesTask implements PackagingTask {
 
     @Override
     public void perform(final DARMojoContext context) throws IOException {
-	final File diffusionDirectory = context.getDiffusionDirectory();
+	final File diffusionDirectory = context.getDiffusionResourceDirectory();
 
 	if (diffusionDirectory.exists()) {
-	    context.getArchiver().addDirectory(
-		    diffusionDirectory,
-		    or(context.getDiffusionIncludes(), DEFAULT_INCLUDES),
-		    or(context.getDiffusionExcludes(), DEFAULT_EXCLUDES)
-		    );
+	    final DefaultFileSet fileSet = new DefaultFileSet();
+
+	    fileSet.setDirectory(diffusionDirectory);
+	    fileSet.setIncludes(
+		    or(context.getDiffusionIncludes(), DEFAULT_INCLUDES));
+	    fileSet.setExcludes(
+		    or(context.getDiffusionExcludes(), DEFAULT_EXCLUDES));
+
+	    fileSet.setPrefix(
+		    context.getPrefixDirectoryName() + File.separator);
+
+	    context.getArchiver().addFileSet(fileSet);
 	}
 	else {
 	    context.getLog().warn(

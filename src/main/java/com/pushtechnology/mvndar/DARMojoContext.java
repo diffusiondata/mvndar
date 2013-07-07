@@ -24,7 +24,7 @@ import org.codehaus.plexus.archiver.Archiver;
 
 /**
  * Provide configuration and services to packaging tasks.
- *
+ * 
  * @author Philip Aston
  */
 interface DARMojoContext {
@@ -33,11 +33,15 @@ interface DARMojoContext {
 
     Log getLog();
 
+    Archiver getArchiver();
+
     MavenArchiveConfiguration getArchiveConfiguration();
+
+    // Input
 
     String getMinimumDiffusionVersion();
 
-    Archiver getArchiver();
+    List<String> getAcceptedDependencyScopes();
 
     File getOutputDirectory();
 
@@ -45,15 +49,17 @@ interface DARMojoContext {
 
     String[] getOutputExcludes();
 
-    String getExtDirectoryName();
-
-    List<String> getExtTypes();
-
-    List<String> getAcceptedDependencyScopes();
-
-    File getDiffusionDirectory();
+    File getDiffusionResourceDirectory();
 
     String[] getDiffusionIncludes();
 
     String[] getDiffusionExcludes();
+
+    // Output
+
+    String getPrefixDirectoryName();
+
+    String getExtDirectoryName();
+
+    List<String> getExtTypes();
 }

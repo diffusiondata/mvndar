@@ -27,6 +27,7 @@ import org.apache.maven.model.Parent;
  * 
  * @author Philip Aston
  */
+@SuppressWarnings("serial")
 public class DARModelStub extends Model {
 
     private final Properties properties = new Properties();

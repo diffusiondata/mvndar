@@ -57,15 +57,18 @@ class JarReflector {
 	final Set<String> containedEntries = new HashSet<String>();
 
 	for (final JarEntry i : list(jar.entries())) {
-	    if (i.getName().startsWith("META-INF/")) {
-		continue;
-	    }
-
 	    if (i.isDirectory()) {
 		continue;
 	    }
 
-	    containedEntries.add(i.getName());
+	    final String n = i.getName();
+	    final String name = n.startsWith("/") ? n.substring(1) : n;
+
+	    if (name.startsWith("META-INF/")) {
+		continue;
+	    }
+
+	    containedEntries.add(name);
 	}
 
 	assertEquals(entries, containedEntries);

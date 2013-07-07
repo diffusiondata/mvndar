@@ -19,6 +19,7 @@ import static com.pushtechnology.mvndar.DARMojo.or;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.codehaus.plexus.archiver.util.DefaultFileSet;
 
 /**
@@ -41,11 +42,17 @@ class AddProjectOutputTask implements PackagingTask {
 	    final DefaultFileSet fileSet = new DefaultFileSet();
 
 	    fileSet.setDirectory(context.getOutputDirectory());
-	    fileSet.setPrefix(context.getExtDirectoryName());
 	    fileSet.setIncludes(
 		    or(context.getOutputIncludes(), DEFAULT_INCLUDES));
 	    fileSet.setExcludes(
 		    or(context.getOutputExcludes(), DEFAULT_EXCLUDES));
+
+	    final File target =
+		    FileUtils.getFile(
+			    context.getPrefixDirectoryName(),
+			    context.getExtDirectoryName());
+
+	    fileSet.setPrefix(target.toString() + File.separator);
 
 	    context.getArchiver().addFileSet(fileSet);
 	} else {

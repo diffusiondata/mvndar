@@ -256,8 +256,13 @@ public class DARMojo extends AbstractMojo {
 	}
 
 	@Override
+	public String getPrefixDirectoryName() {
+	    return project.getArtifactId();
+	}
+
+	@Override
 	public String getExtDirectoryName() {
-	    return "ext/";
+	    return "ext";
 	}
 
 	@Override
@@ -271,7 +276,7 @@ public class DARMojo extends AbstractMojo {
 	}
 
 	@Override
-	public File getDiffusionDirectory() {
+	public File getDiffusionResourceDirectory() {
 	    return diffusionResourceDirectory;
 	}
 

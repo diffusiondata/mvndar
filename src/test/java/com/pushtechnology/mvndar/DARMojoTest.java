@@ -115,7 +115,9 @@ public class DARMojoTest extends AbstractMojoTestCase {
 
 	final JarReflector jar =
 		new JarReflector(new File(buildDirectory, "mydar.dar"));
-	jar.assertEntries(asSet("ext/group-a2.jar", "ext/group-a4.jar"));
+	jar.assertEntries(asSet(
+		"maven-test-plugin/ext/group-a2.jar",
+		"maven-test-plugin/ext/group-a4.jar"));
     }
 
     public void testResources() throws Exception {
@@ -146,7 +148,9 @@ public class DARMojoTest extends AbstractMojoTestCase {
 	final JarReflector jar =
 		new JarReflector(new File(buildDirectory, "mydar.dar"));
 	jar.assertEntries(asSet(
-		"etc/Publishers.xml", "html/hello.html", "data/x/y"));
+		"maven-test-plugin/etc/Publishers.xml",
+		"maven-test-plugin/html/hello.html",
+		"maven-test-plugin/data/x/y"));
     }
 
     public void testOutput() throws Exception {
@@ -174,7 +178,8 @@ public class DARMojoTest extends AbstractMojoTestCase {
 
 	final JarReflector jar =
 		new JarReflector(new File(buildDirectory, "mydar.dar"));
-	jar.assertEntries(asSet("ext/x/y/z"));
+	jar.assertEntries(
+		asSet("maven-test-plugin/ext/x/y/z"));
     }
 
     private Artifact createArtifact(
