@@ -96,14 +96,14 @@ mvn package
 
 * How to include/exclude content from the <<<dar>>> artifact
 
-  You can customise what is included or excluded from the project
-  output by specifying a list of fileset patterns using
-  <<<\<outputIncludes\>>>>/<<<\<outputInclude\>>>> or
-  <<<\<outputExcludes\>>>>/<<<\<outputExclude\>>>>.
+  You can customise the project output that is included or excluded by
+  specifying a list of fileset patterns using
+  <<<\<outputIncludes\>>>>/<<<\</outputInclude\>>>> or
+  <<<\<outputExcludes\>>>>/<<<\</outputExclude\>>>>.
 
   Similarly, you can filter the content from <<<src/main/diffusion>>>
   using <<<\<diffusionIncludes\>>>>/<<<\<diffusionInclude\>>>> or
-  <<<\<diffusionExcludes\>>>>/<<<\<diffusionExclude\>>>>.
+  <<<\</diffusionExcludes\>>>>/<<<\</diffusionExclude\>>>>.
 
 * How to change the minimum Diffusion version
 
