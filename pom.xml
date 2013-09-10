@@ -103,7 +103,7 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <scope>test</scope>
-        </dependency>        
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -226,6 +226,7 @@
                     <showWarnings>true</showWarnings>
                 </configuration>
             </plugin>
+
             <plugin>
                 <artifactId>maven-plugin-plugin</artifactId>
                 <configuration>
@@ -239,6 +240,16 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <configuration>
+                <!-- Don't re-use forks. Otherwise, depending on the test
+                order, Mockito can fail to mock a package scope interface
+                due to a class loading / IllegalAccessError issue. -->
+                <reuseForks>true</reuseForks>
+              </configuration>
             </plugin>
 
             <plugin>
