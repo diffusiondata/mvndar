@@ -248,7 +248,7 @@
                 <!-- Don't re-use forks. Otherwise, depending on the test
                 order, Mockito can fail to mock a package scope interface
                 due to a class loading / IllegalAccessError issue. -->
-                <reuseForks>true</reuseForks>
+                <reuseForks>false</reuseForks>
               </configuration>
             </plugin>
 
