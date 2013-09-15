@@ -306,19 +306,14 @@
                             </configuration>
                         </plugin>
 
+                        <plugin>
+                          <artifactId>maven-plugin-plugin</artifactId>
+                          <version>${mavenPluginVersion}</version>
+                        </plugin>
                     </reportPlugins>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <artifactId>maven-plugin-plugin</artifactId>
-                <version>${mavenPluginVersion}</version>
-            </plugin>
-        </plugins>
-    </reporting>
 
 </project>
