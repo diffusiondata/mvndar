@@ -32,6 +32,9 @@ class AddDependenciesTask implements PackagingTask {
     @Override
     public void perform(final DARMojoContext context) throws IOException {
 
+        // This only gets the direct dependencies. See
+        // https://github.com/pushtechnology/mvndar/issues/1
+
         @SuppressWarnings("unchecked")
         final Set<Artifact> dependencies =
                 context.getProject().getDependencyArtifacts();

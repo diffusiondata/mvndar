@@ -80,7 +80,11 @@ mvn package
   <<<system>>>. Any <<<provided>>> and <<<test>>> dependencies will
   not be included.
 
-  * Optional dependencies will not be included.
+  * Optional dependencies are not included.
+
+  * Transitive dependencies are not included. You must explicitly
+    list dependencies you want included in your project's POM. See
+    {{{https://github.com/pushtechnology/mvndar/issues/1}Issue #1}}.
 
   * A <<<com.pushtechnology:diffusion-api>>> dependency will not be
   included, since the server provides these classes.
