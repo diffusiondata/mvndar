@@ -29,15 +29,15 @@ class CreateManifestTask implements PackagingTask {
     @Override
     public void perform(final DARMojoContext context) throws IOException {
 
-	final Log log = context.getLog();
-	final MavenArchiveConfiguration archiveConfiguration =
-		context.getArchiveConfiguration();
+        final Log log = context.getLog();
+        final MavenArchiveConfiguration archiveConfiguration =
+                context.getArchiveConfiguration();
 
-	archiveConfiguration.getManifestEntries().put(
-		"Diffusion-Version",
-		context.getMinimumDiffusionVersion());
+        archiveConfiguration.getManifestEntries().put(
+                "Diffusion-Version",
+                context.getMinimumDiffusionVersion());
 
-	log.debug("Manifest entries: "
-		+ archiveConfiguration.getManifestEntries());
+        log.debug("Manifest entries: " +
+                archiveConfiguration.getManifestEntries());
     }
 }

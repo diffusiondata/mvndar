@@ -24,7 +24,7 @@ import org.codehaus.plexus.archiver.Archiver;
 
 /**
  * Provide configuration and services to packaging tasks.
- * 
+ *
  * @author Philip Aston
  */
 interface DARMojoContext {

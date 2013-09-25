@@ -23,39 +23,39 @@ import org.codehaus.plexus.archiver.util.DefaultFileSet;
 
 /**
  * Package the provided resources.
- * 
+ *
  * @author Philip Aston
  */
 class AddDiffusionResourcesTask implements PackagingTask {
 
     private static final String[] DEFAULT_INCLUDES = new String[] {
-	    "data/**",
-	    "etc/**",
-	    "html/**", };
+            "data/**",
+            "etc/**",
+            "html/**", };
 
     private static final String[] DEFAULT_EXCLUDES = new String[] {};
 
     @Override
     public void perform(final DARMojoContext context) throws IOException {
-	final File diffusionDirectory = context.getDiffusionResourceDirectory();
+        final File diffusionDirectory = context.getDiffusionResourceDirectory();
 
-	if (diffusionDirectory.exists()) {
-	    final DefaultFileSet fileSet = new DefaultFileSet();
+        if (diffusionDirectory.exists()) {
+            final DefaultFileSet fileSet = new DefaultFileSet();
 
-	    fileSet.setDirectory(diffusionDirectory);
-	    fileSet.setIncludes(
-		    or(context.getDiffusionIncludes(), DEFAULT_INCLUDES));
-	    fileSet.setExcludes(
-		    or(context.getDiffusionExcludes(), DEFAULT_EXCLUDES));
+            fileSet.setDirectory(diffusionDirectory);
+            fileSet.setIncludes(
+                    or(context.getDiffusionIncludes(), DEFAULT_INCLUDES));
+            fileSet.setExcludes(
+                    or(context.getDiffusionExcludes(), DEFAULT_EXCLUDES));
 
-	    fileSet.setPrefix(
-		    context.getPrefixDirectoryName() + File.separator);
+            fileSet.setPrefix(
+                    context.getPrefixDirectoryName() + File.separator);
 
-	    context.getArchiver().addFileSet(fileSet);
-	}
-	else {
-	    context.getLog().warn(
-		    diffusionDirectory + " does not exist, skipping");
-	}
+            context.getArchiver().addFileSet(fileSet);
+        }
+        else {
+            context.getLog().warn(
+                    diffusionDirectory + " does not exist, skipping");
+        }
     }
 }

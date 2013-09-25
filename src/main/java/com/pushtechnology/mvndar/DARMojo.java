@@ -38,20 +38,20 @@ import org.codehaus.plexus.archiver.jar.JarArchiver;
 
 /**
  * Goal that creates a Diffusion™ Archive (DAR) file.
- * 
+ *
  * @author Philip Aston
  */
 @Mojo(
-	name = "dar",
-	defaultPhase = LifecyclePhase.PACKAGE,
-	threadSafe = true,
-	requiresDependencyResolution = ResolutionScope.TEST)
+    name = "dar",
+    defaultPhase = LifecyclePhase.PACKAGE,
+    threadSafe = true,
+    requiresDependencyResolution = ResolutionScope.TEST)
 public class DARMojo extends AbstractMojo {
 
     /**
      * The project output directory. The contents will be packaged in the DAR
      * {@code ext} directory.
-     * 
+     *
      * @see #outputIncludes
      * @see #outputExcludes
      */
@@ -61,7 +61,7 @@ public class DARMojo extends AbstractMojo {
     /**
      * Directory containing additional resources to add to the DAR file.
      * Typically contains at least {@code etc/Publishers.xml}.
-     * 
+     *
      * @see #diffusionIncludes
      * @see #diffusionExcludes
      */
@@ -77,7 +77,9 @@ public class DARMojo extends AbstractMojo {
     /**
      * The name of the DAR file to generate.
      */
-    @Parameter(alias = "darName", defaultValue = "${project.build.finalName}", required = true)
+    @Parameter(alias = "darName",
+        defaultValue = "${project.build.finalName}",
+        required = true)
     private String finalName;
 
     /**
@@ -129,7 +131,8 @@ public class DARMojo extends AbstractMojo {
      * Archiver Reference</a>.
      */
     @Parameter
-    private final MavenArchiveConfiguration archiver = new MavenArchiveConfiguration();
+    private final MavenArchiveConfiguration archiver =
+        new MavenArchiveConfiguration();
 
     @Component(role = Archiver.class, hint = "jar")
     private JarArchiver jarArchiver;
@@ -148,154 +151,161 @@ public class DARMojo extends AbstractMojo {
 
     // Possibly should be a parameter.
     private static final List<String> ACCEPTED_DEPENDENCY_SCOPES = asList(
-	    Artifact.SCOPE_COMPILE,
-	    Artifact.SCOPE_RUNTIME,
-	    Artifact.SCOPE_SYSTEM);
+        Artifact.SCOPE_COMPILE,
+        Artifact.SCOPE_RUNTIME,
+        Artifact.SCOPE_SYSTEM);
 
     private final PackagingTask[] packagingTasks =
-	    new PackagingTask[] {
-		    new AddDependenciesTask(),
-		    new AddDiffusionResourcesTask(),
-		    new AddProjectOutputTask(),
-		    new CreateManifestTask(), };
+        new PackagingTask[] {
+            new AddDependenciesTask(),
+            new AddDiffusionResourcesTask(),
+            new AddProjectOutputTask(),
+            new CreateManifestTask(), };
 
     @Override
     public void execute() throws MojoExecutionException {
 
-	try {
-	    final File darFile =
-		    getDarFile(buildDirectory, finalName, classifier);
+        try {
+            final File darFile =
+                getDarFile(buildDirectory, finalName, classifier);
 
-	    getLog().info("Assembling DAR [" + project.getArtifactId() + "]");
+            getLog().info("Assembling DAR [" + project.getArtifactId() + "]");
 
-	    final MavenArchiver mvnArchiver = new MavenArchiver();
-	    mvnArchiver.setArchiver(jarArchiver);
-	    mvnArchiver.setOutputFile(darFile);
+            final MavenArchiver mvnArchiver = new MavenArchiver();
+            mvnArchiver.setArchiver(jarArchiver);
+            mvnArchiver.setOutputFile(darFile);
 
-	    final DARMojoContext context =
-		    new DARMojoContextImpl(mvnArchiver.getArchiver());
+            final DARMojoContext context =
+                new DARMojoContextImpl(mvnArchiver.getArchiver());
 
-	    for (final PackagingTask t : packagingTasks) {
-		t.perform(context);
-	    }
+            for (final PackagingTask t : packagingTasks) {
+                t.perform(context);
+            }
 
-	    mvnArchiver.createArchive(session, project, archiver);
+            mvnArchiver.createArchive(session, project, archiver);
 
-	    if (classifier != null) {
-		projectHelper.attachArtifact(
-			project, "dar", classifier, darFile);
-	    }
-	    else {
-		project.getArtifact().setFile(darFile);
-	    }
-
-	} catch (final Exception e) {
-	    throw new MojoExecutionException("Error assembling DAR", e);
-	}
+            if (classifier != null) {
+                projectHelper.attachArtifact(
+                    project, "dar", classifier, darFile);
+            }
+            else {
+                project.getArtifact().setFile(darFile);
+            }
+        }
+        // CHECKSTYLE.OFF: IllegalCatch
+        catch (final Exception e) {
+            throw new MojoExecutionException("Error assembling DAR", e);
+        }
+        // CHECKSTYLE.ON: IllegalCatch
     }
 
     private static File getDarFile(
-	    final String basedir, final String finalName, String classifier) {
+        final String basedir, final String finalName, final String classifier) {
 
-	if (classifier == null) {
-	    classifier = "";
-	}
-	else if (!classifier.trim().isEmpty() && !classifier.startsWith("-")) {
-	    classifier = "-" + classifier;
-	}
+        final String c;
 
-	return new File(basedir, finalName + classifier + ".dar");
+        if (classifier == null) {
+            c = "";
+        }
+        else if (!classifier.trim().isEmpty() && !classifier.startsWith("-")) {
+            c = "-" + classifier;
+        }
+        else {
+            c = classifier;
+        }
+
+        return new File(basedir, finalName + c + ".dar");
     }
 
     private final class DARMojoContextImpl implements DARMojoContext {
 
-	private final JarArchiver jarArchiver;
+        private final JarArchiver jarArchiver;
 
-	public DARMojoContextImpl(final JarArchiver jarArchiver) {
-	    this.jarArchiver = jarArchiver;
-	}
+        public DARMojoContextImpl(final JarArchiver jarArchiver) {
+            this.jarArchiver = jarArchiver;
+        }
 
-	@Override
-	public MavenProject getProject() {
-	    return project;
-	}
+        @Override
+        public MavenProject getProject() {
+            return project;
+        }
 
-	@Override
-	public Log getLog() {
-	    return DARMojo.this.getLog();
-	}
+        @Override
+        public Log getLog() {
+            return DARMojo.this.getLog();
+        }
 
-	@Override
-	public MavenArchiveConfiguration getArchiveConfiguration() {
-	    return archiver;
-	}
+        @Override
+        public MavenArchiveConfiguration getArchiveConfiguration() {
+            return archiver;
+        }
 
-	@Override
-	public String getMinimumDiffusionVersion() {
-	    return minimumDiffusionVersion;
-	}
+        @Override
+        public String getMinimumDiffusionVersion() {
+            return minimumDiffusionVersion;
+        }
 
-	@Override
-	public Archiver getArchiver() {
-	    return jarArchiver;
-	}
+        @Override
+        public Archiver getArchiver() {
+            return jarArchiver;
+        }
 
-	@Override
-	public File getOutputDirectory() {
-	    return outputDirectory;
-	}
+        @Override
+        public File getOutputDirectory() {
+            return outputDirectory;
+        }
 
-	@Override
-	public String[] getOutputIncludes() {
-	    return outputIncludes;
-	}
+        @Override
+        public String[] getOutputIncludes() {
+            return outputIncludes;
+        }
 
-	@Override
-	public String[] getOutputExcludes() {
-	    return outputExcludes;
-	}
+        @Override
+        public String[] getOutputExcludes() {
+            return outputExcludes;
+        }
 
-	@Override
-	public String getPrefixDirectoryName() {
-	    return project.getArtifactId();
-	}
+        @Override
+        public String getPrefixDirectoryName() {
+            return project.getArtifactId();
+        }
 
-	@Override
-	public String getExtDirectoryName() {
-	    return "ext";
-	}
+        @Override
+        public String getExtDirectoryName() {
+            return "ext";
+        }
 
-	@Override
-	public List<String> getExtTypes() {
-	    return EXT_DEPENDENCY_TYPES;
-	}
+        @Override
+        public List<String> getExtTypes() {
+            return EXT_DEPENDENCY_TYPES;
+        }
 
-	@Override
-	public List<String> getAcceptedDependencyScopes() {
-	    return ACCEPTED_DEPENDENCY_SCOPES;
-	}
+        @Override
+        public List<String> getAcceptedDependencyScopes() {
+            return ACCEPTED_DEPENDENCY_SCOPES;
+        }
 
-	@Override
-	public File getDiffusionResourceDirectory() {
-	    return diffusionResourceDirectory;
-	}
+        @Override
+        public File getDiffusionResourceDirectory() {
+            return diffusionResourceDirectory;
+        }
 
-	@Override
-	public String[] getDiffusionIncludes() {
-	    return diffusionIncludes;
-	}
+        @Override
+        public String[] getDiffusionIncludes() {
+            return diffusionIncludes;
+        }
 
-	@Override
-	public String[] getDiffusionExcludes() {
-	    return diffusionExcludes;
-	}
+        @Override
+        public String[] getDiffusionExcludes() {
+            return diffusionExcludes;
+        }
     }
 
     static <T> T or(final T one, final T two) {
-	if (one != null) {
-	    return one;
-	}
+        if (one != null) {
+            return one;
+        }
 
-	return two;
+        return two;
     }
 }

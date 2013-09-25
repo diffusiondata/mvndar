@@ -24,7 +24,7 @@ import org.codehaus.plexus.archiver.util.DefaultFileSet;
 
 /**
  * Add the project output to the {@code ext} directory.
- * 
+ *
  * @author Philip Aston
  */
 class AddProjectOutputTask implements PackagingTask {
@@ -36,28 +36,29 @@ class AddProjectOutputTask implements PackagingTask {
     @Override
     public void perform(final DARMojoContext context) throws IOException {
 
-	final File outputDirectory = context.getOutputDirectory();
+        final File outputDirectory = context.getOutputDirectory();
 
-	if (outputDirectory.exists()) {
-	    final DefaultFileSet fileSet = new DefaultFileSet();
+        if (outputDirectory.exists()) {
+            final DefaultFileSet fileSet = new DefaultFileSet();
 
-	    fileSet.setDirectory(context.getOutputDirectory());
-	    fileSet.setIncludes(
-		    or(context.getOutputIncludes(), DEFAULT_INCLUDES));
-	    fileSet.setExcludes(
-		    or(context.getOutputExcludes(), DEFAULT_EXCLUDES));
+            fileSet.setDirectory(context.getOutputDirectory());
+            fileSet.setIncludes(
+                or(context.getOutputIncludes(), DEFAULT_INCLUDES));
+            fileSet.setExcludes(
+                or(context.getOutputExcludes(), DEFAULT_EXCLUDES));
 
-	    final File target =
-		    FileUtils.getFile(
-			    context.getPrefixDirectoryName(),
-			    context.getExtDirectoryName());
+            final File target =
+                FileUtils.getFile(
+                    context.getPrefixDirectoryName(),
+                    context.getExtDirectoryName());
 
-	    fileSet.setPrefix(target.toString() + File.separator);
+            fileSet.setPrefix(target.toString() + File.separator);
 
-	    context.getArchiver().addFileSet(fileSet);
-	} else {
-	    context.getLog().warn(
-		    outputDirectory + " does not exist, skipping");
-	}
+            context.getArchiver().addFileSet(fileSet);
+        }
+        else {
+            context.getLog().warn(
+                outputDirectory + " does not exist, skipping");
+        }
     }
 }

@@ -24,7 +24,7 @@ import org.apache.maven.plugin.logging.Log;
 
 /**
  * Package the project dependencies in the {@code ext} directory.
- * 
+ *
  * @author Philip Aston
  */
 class AddDependenciesTask implements PackagingTask {
@@ -32,45 +32,45 @@ class AddDependenciesTask implements PackagingTask {
     @Override
     public void perform(final DARMojoContext context) throws IOException {
 
-	@SuppressWarnings("unchecked")
-	final Set<Artifact> dependencies =
-		context.getProject().getDependencyArtifacts();
+        @SuppressWarnings("unchecked")
+        final Set<Artifact> dependencies =
+                context.getProject().getDependencyArtifacts();
 
-	final Log log = context.getLog();
+        final Log log = context.getLog();
 
-	for (final Artifact a : dependencies) {
+        for (final Artifact a : dependencies) {
 
-	    if (a.isOptional()) {
-		log.debug("Ignoring optional dependency: " + a);
-		continue;
-	    }
+            if (a.isOptional()) {
+                log.debug("Ignoring optional dependency: " + a);
+                continue;
+            }
 
-	    if (!context.getAcceptedDependencyScopes().contains(a.getScope())) {
-		log.debug("Ignoring dependency (scope): " + a);
-		continue;
-	    }
+            if (!context.getAcceptedDependencyScopes().contains(a.getScope())) {
+                log.debug("Ignoring dependency (scope): " + a);
+                continue;
+            }
 
-	    if ("com.pushtechnology".equals(a.getGroupId()) &&
-		    "diffusion-api".equals(a.getArtifactId())) {
-		continue;
-	    }
+            if ("com.pushtechnology".equals(a.getGroupId()) &&
+                    "diffusion-api".equals(a.getArtifactId())) {
+                continue;
+            }
 
-	    if (context.getExtTypes().contains(a.getType())) {
-		final File f = a.getFile().getCanonicalFile();
+            if (context.getExtTypes().contains(a.getType())) {
+                final File f = a.getFile().getCanonicalFile();
 
-		final File target =
-			FileUtils.getFile(
-				context.getPrefixDirectoryName(),
-				context.getExtDirectoryName(),
-				f.getName());
+                final File target =
+                        FileUtils.getFile(
+                                context.getPrefixDirectoryName(),
+                                context.getExtDirectoryName(),
+                                f.getName());
 
-		context.getArchiver().addFile(f, target.toString());
+                context.getArchiver().addFile(f, target.toString());
 
-		log.debug(" Dependency " + a + " has been copied to " + target);
-	    }
-	    else {
-		log.debug("Ignoring dependency: " + a);
-	    }
-	}
+                log.debug(" Dependency " + a + " has been copied to " + target);
+            }
+            else {
+                log.debug("Ignoring dependency: " + a);
+            }
+        }
     }
 }
