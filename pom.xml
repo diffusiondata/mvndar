@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -10,7 +11,7 @@
   <groupId>com.pushtechnology.tools</groupId>
   <artifactId>dar-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>1.1</version>
+  <version>1.1-SNAPSHOT</version>
   <url>https://github.com/pushtechnology/mvndar</url>
   <description>A Maven plugin for creating Diffusion DAR files.</description>
 
@@ -33,7 +34,7 @@
     <url>https://github.com/pushtechnology/mvndar</url>
     <connection>scm:git:https://github.com/pushtechnology/mvndar</connection>
     <developerConnection>scm:git:ssh://git@github.com/pushtechnology/mvndar.git</developerConnection>
-    <tag>dar-maven-plugin-1.1</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <properties>
