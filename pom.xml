@@ -33,6 +33,7 @@
   <scm>
     <url>https://github.com/pushtechnology/mvndar</url>
     <connection>scm:git:https://github.com/pushtechnology/mvndar</connection>
+    <developerConnection>scm:git:ssh://git@github.com/pushtechnology/mvndar.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
