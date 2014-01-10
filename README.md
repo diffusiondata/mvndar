@@ -7,6 +7,6 @@ A Maven plugin to create Diffusion DAR files.
 
 # Changes
 
-## 1.1-SNAPSHOT
+## 1.1
 
  - The plugin's GroupId has changed to `com.pushtechnology.tools`.
