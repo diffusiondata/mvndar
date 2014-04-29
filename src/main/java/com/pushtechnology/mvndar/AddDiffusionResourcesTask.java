@@ -29,7 +29,6 @@ import org.codehaus.plexus.archiver.util.DefaultFileSet;
 class AddDiffusionResourcesTask implements PackagingTask {
 
     private static final String[] DEFAULT_INCLUDES = new String[] {
-            "data/**",
             "etc/**",
             "html/**", };
 

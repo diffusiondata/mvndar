@@ -91,16 +91,10 @@ mvn package
 
 ** Resources
 
-  Any content in <<<data>>>, <<<etc>>>, or <<<html>>> subdirectories
+  Any content in <<<etc>>>, or <<<html>>> subdirectories
   of <<<src/main/diffusion>>> will be added to the DAR file.
-
-** Manifest
-
-  A <<<Diffusion-Version>>> entry will be added to the DAR manifest.
-
-* How to include/exclude content from the <<<dar>>> artifact
-
-  You can customise the project output that is included or excluded by
+  
+    You can customise the project output that is included or excluded by
   specifying a list of fileset patterns using
   <<<\<outputIncludes\>>>>/<<<\</outputInclude\>>>> or
   <<<\<outputExcludes\>>>>/<<<\</outputExclude\>>>>.
@@ -108,8 +102,11 @@ mvn package
   Similarly, you can filter the content from <<<src/main/diffusion>>>
   using <<<\<diffusionIncludes\>>>>/<<<\<diffusionInclude\>>>> or
   <<<\</diffusionExcludes\>>>>/<<<\</diffusionExclude\>>>>.
+  
+  
+** Manifest
 
-* How to change the minimum Diffusion version
+  A <<<Diffusion-Version>>> entry will be added to the DAR manifest.
 
   The <<<Diffusion-Version>>> entry value defaults to
   <<4.5.0>>. It can be changed using <<<\<minimumDiffusionVersion\>>>>.

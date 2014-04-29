@@ -9,7 +9,7 @@
 
 mvndar - A Maven plugin to create DAR files
 
-  Copyright 2013 Push Technology.
+  Copyright 2014 Push Technology.
  
   Licensed under the {{{./license.html}Apache License, Version 2.0}}.
 

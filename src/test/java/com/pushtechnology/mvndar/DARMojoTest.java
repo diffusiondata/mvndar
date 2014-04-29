@@ -34,7 +34,7 @@ import com.pushtechnology.mvndar.stubs.DARMavenProjectStub;
 
 /**
  * Unit tests for {@link DARMojo}.
- * 
+ *
  * @author Philip Aston
  */
 public class DARMojoTest extends AbstractMojoTestCase {
@@ -135,13 +135,11 @@ public class DARMojoTest extends AbstractMojoTestCase {
 
 	new File(d, "etc").mkdir();
 	new File(d, "html").mkdir();
-	new File(d, "data/x").mkdirs();
 	new File(d, "foo").mkdir();
 
 	new File(d, "etc/Publishers.xml").createNewFile();
 	new File(d, "foo/ignored.txt").createNewFile();
 	new File(d, "html/hello.html").createNewFile();
-	new File(d, "data/x/y").createNewFile();
 
 	mojo.execute();
 
@@ -149,8 +147,7 @@ public class DARMojoTest extends AbstractMojoTestCase {
 		new JarReflector(new File(buildDirectory, "mydar.dar"));
 	jar.assertEntries(asSet(
 		"maven-test-plugin/etc/Publishers.xml",
-		"maven-test-plugin/html/hello.html",
-		"maven-test-plugin/data/x/y"));
+		"maven-test-plugin/html/hello.html"));
     }
 
     public void testOutput() throws Exception {
