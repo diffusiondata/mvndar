@@ -22,13 +22,6 @@
     </developer>
   </developers>
 
-  <repositories>
-    <repository>
-      <id>push-repository</id>
-      <url>http://download.pushtechnology.com/maven/</url>
-    </repository>
-  </repositories>
-
   <scm>
     <url>https://github.com/pushtechnology/mvndar</url>
     <connection>scm:git:https://github.com/pushtechnology/mvndar</connection>
@@ -171,6 +164,19 @@
         <plugin>
           <artifactId>maven-scm-publish-plugin</artifactId>
           <version>1.0-beta-2</version>
+        </plugin>
+
+        <!--
+
+         Need later release plugin than parent to workaround
+         MRELEASE-812.
+
+         See http://stackoverflow.com/questions/15166781/mvn-releaseprepare-not-committing-changes-to-pom-xml
+
+        -->
+        <plugin>
+            <artifactId>maven-release-plugin</artifactId>
+            <version>2.5</version>
         </plugin>
 
       </plugins>
