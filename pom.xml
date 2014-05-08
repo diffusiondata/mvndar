@@ -22,6 +22,15 @@
     </developer>
   </developers>
 
+  <!-- Need to specify the repository so parent can be found.
+   -->
+  <repositories>
+    <repository>
+      <id>push-repository</id>
+      <url>http://download.pushtechnology.com/maven/</url>
+    </repository>
+  </repositories>
+
   <scm>
     <url>https://github.com/pushtechnology/mvndar</url>
     <connection>scm:git:https://github.com/pushtechnology/mvndar</connection>
