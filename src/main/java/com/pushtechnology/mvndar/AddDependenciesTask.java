@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Push Technology Ltd.
+ * Copyright (C) 2014 Push Technology Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,6 +59,13 @@ class AddDependenciesTask implements PackagingTask {
             }
 
             if (context.getExtTypes().contains(a.getType())) {
+                if (a.getFile() == null) {
+                    // Happens for relocated artifacts, e.g.
+                    // org.apache.commons:commons-io:jar:1.3.2
+                    log.warn("Failed to locate dependency " + a + ", skipping");
+                    continue;
+                }
+
                 final File f = a.getFile().getCanonicalFile();
 
                 final File target =
@@ -69,7 +76,7 @@ class AddDependenciesTask implements PackagingTask {
 
                 context.getArchiver().addFile(f, target.toString());
 
-                log.debug(" Dependency " + a + " has been copied to " + target);
+                log.debug("Dependency " + a + " has been copied to " + target);
             }
             else {
                 log.debug("Ignoring dependency: " + a);
