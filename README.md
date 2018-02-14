@@ -7,6 +7,9 @@ A Maven plugin to create Diffusion DAR files.
 
 # Changes
 
+## 1.4
+ - Java 7 is now a minimum requirement for running the plugin.
+
 ## 1.3
  - [fix] Cope with reloctaed dependencies [#2](/../../issues/2)
  - [fix] Fix Windows regression introduced in 1.2 [#3](/../../issues/3)
