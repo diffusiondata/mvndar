@@ -3,8 +3,6 @@
  ------
  Philip Aston
  ------
- 2013-07-17
- ------
 
 Usage
 
@@ -93,7 +91,7 @@ mvn package
 
   Any content in <<<etc>>>, or <<<html>>> subdirectories
   of <<<src/main/diffusion>>> will be added to the DAR file.
-  
+
     You can customise the project output that is included or excluded by
   specifying a list of fileset patterns using
   <<<\<outputIncludes\>>>>/<<<\</outputInclude\>>>> or
@@ -102,8 +100,8 @@ mvn package
   Similarly, you can filter the content from <<<src/main/diffusion>>>
   using <<<\<diffusionIncludes\>>>>/<<<\<diffusionInclude\>>>> or
   <<<\</diffusionExcludes\>>>>/<<<\</diffusionExclude\>>>>.
-  
-  
+
+
 ** Manifest
 
   A <<<Diffusion-Version>>> entry will be added to the DAR manifest.
@@ -123,7 +121,7 @@ mvn package
         <version>${project.version}</version>
         <extensions>true</extensions>
         <configuration>
-          <minimumDiffusionVersion>4.6.0</minimumDiffusionVersion>
+          <minimumDiffusionVersion>6.0.0</minimumDiffusionVersion>
         </configuration>
       </plugin>
       ...
