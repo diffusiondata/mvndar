@@ -3,7 +3,7 @@
 
   <parent>
     <groupId>com.pushtechnology.sample</groupId>
-    <version>1.2</version>
+    <version>1.5</version>
     <artifactId>sample-parent</artifactId>
   </parent>
 
