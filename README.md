@@ -7,6 +7,10 @@ A Maven plugin to create Diffusion DAR files.
 
 # Changes
 
+## 1.3
+ - [fix] Cope with reloctaed dependencies [#2](/../../issues/2)
+ - [fix] Fix Windows regression introduced in 1.2 [#3](/../../issues/3)
+
 ## 1.2
 
  - Support and documentation for use of a ```data``` folder within the DAR has been removed. This functionality can be replicated by using the ```diffusionIncludes``` configuration property.
