@@ -10,7 +10,7 @@
   <groupId>com.pushtechnology.tools</groupId>
   <artifactId>dar-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>1.3</version>
+  <version>1.4-SNAPSHOT</version>
   <url>https://github.com/pushtechnology/mvndar</url>
   <description>A Maven plugin for creating Diffusion DAR files.</description>
 
@@ -35,7 +35,7 @@
     <url>https://github.com/pushtechnology/mvndar</url>
     <connection>scm:git:https://github.com/pushtechnology/mvndar</connection>
     <developerConnection>scm:git:ssh://git@github.com/pushtechnology/mvndar.git</developerConnection>
-    <tag>dar-maven-plugin-1.3</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <properties>
